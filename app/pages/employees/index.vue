@@ -37,6 +37,7 @@
 
           <!-- Add Button -->
           <button
+            @click="$router.push('/employees/create')"
             class="w-full sm:w-auto px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2 font-medium"
           >
             <svg
@@ -143,7 +144,7 @@
 
         <!-- Table -->
         <div v-else class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200">
+          <table class="w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
                 <th
@@ -164,17 +165,62 @@
                 <th
                   class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
+                  Tempat lahir
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Alamat
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Tgl Lahir
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  L/P
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Agama
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Tempat Tugas
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  No. HP
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  NPWP
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Pangkat/Gol
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
+                  Eselon
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                >
                   Jabatan
                 </th>
                 <th
                   class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
                   Unit Kerja
-                </th>
-                <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                >
-                  Pangkat
                 </th>
                 <th
                   class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -219,27 +265,69 @@
                   <div class="text-sm font-medium text-gray-900">
                     {{ emp.full_name }}
                   </div>
-                  <div class="text-sm text-gray-500">{{ emp.phone }}</div>
                 </td>
 
-                <!-- Position -->
-                <td class="px-6 py-4">
+                <!-- Tempat Lahir -->
+                <td class="px-6 py-4 whitespace-nowrap">
                   <div class="text-sm text-gray-900">
-                    {{ emp.position?.name || "-" }}
-                  </div>
-                  <div class="text-xs text-gray-500">
-                    {{ emp.echelon?.name || "-" }}
+                    {{ emp.birth_place || "-" }}
                   </div>
                 </td>
 
-                <!-- Unit -->
+                <!-- Address -->
                 <td class="px-6 py-4">
+                  <div class="text-sm text-gray-900 max-w-xs truncate">
+                    {{ emp.address || "-" }}
+                  </div>
+                </td>
+
+                <!-- Tgl Lahir -->
+                <td class="px-6 py-4 whitespace-nowrap">
                   <div class="text-sm text-gray-900">
-                    {{ emp.unit?.name || "-" }}
+                    {{ formatDate(emp.birth_date) }}
                   </div>
-                  <div class="text-xs text-gray-500">
-                    {{ emp.unit?.kode || "-" }}
+                </td>
+
+                <!-- Gender -->
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span
+                    :class="[
+                      'px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full',
+                      emp.gender
+                        ? 'bg-blue-100 text-blue-800'
+                        : 'bg-pink-100 text-pink-800',
+                    ]"
+                  >
+                    {{ emp.gender ? "L" : "P" }}
+                  </span>
+                </td>
+
+                <!-- Religion -->
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="text-sm text-gray-900">
+                    {{ emp.religion?.name || "-" }}
+                  </span>
+                </td>
+
+                <!-- Tempat Tugas -->
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">
+                    {{ emp.duty_place || "-" }}
                   </div>
+                </td>
+
+                <!-- No. HP -->
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="text-sm text-gray-900">{{
+                    emp.phone || "-"
+                  }}</span>
+                </td>
+
+                <!-- NPWP -->
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="text-sm font-mono text-gray-900">{{
+                    emp.npwp || "-"
+                  }}</span>
                 </td>
 
                 <!-- Rank -->
@@ -254,65 +342,102 @@
                   </div>
                 </td>
 
+                <!-- Echelon -->
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900">
+                    {{ emp.echelon?.code || "-" }}
+                  </div>
+                  <div class="text-xs text-gray-500">
+                    {{ emp.echelon?.name || "-" }}
+                  </div>
+                </td>
+
+                <!-- Position -->
+                <td class="px-6 py-4">
+                  <div class="text-sm text-gray-900 max-w-xs">
+                    {{ emp.position?.name || "-" }}
+                  </div>
+                </td>
+
+                <!-- Unit -->
+                <td class="px-6 py-4">
+                  <div class="text-sm text-gray-900">
+                    {{ emp.unit?.name || "-" }}
+                  </div>
+                  <div class="text-xs text-gray-500">
+                    {{ emp.unit?.kode || "-" }}
+                  </div>
+                </td>
+
                 <!-- Actions -->
                 <td
                   class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
                 >
-                  <button
-                    class="text-blue-600 hover:text-blue-900 mr-3 transition"
-                  >
-                    <svg
-                      class="h-5 w-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                  <div class="flex justify-end gap-2">
+                    <button
+                      @click="viewEmployee(emp.id)"
+                      class="text-blue-600 hover:text-blue-900 transition"
+                      title="Lihat Detail"
                     >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                      />
-                    </svg>
-                  </button>
-                  <button
-                    class="text-gray-600 hover:text-gray-900 mr-3 transition"
-                  >
-                    <svg
-                      class="h-5 w-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                      <svg
+                        class="h-5 w-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      @click="editEmployee(emp.id)"
+                      class="text-gray-600 hover:text-gray-900 transition"
+                      title="Edit"
                     >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                      />
-                    </svg>
-                  </button>
-                  <button class="text-red-600 hover:text-red-900 transition">
-                    <svg
-                      class="h-5 w-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                      <svg
+                        class="h-5 w-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      @click="confirmDelete(emp)"
+                      class="text-red-600 hover:text-red-900 transition"
+                      title="Hapus"
                     >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                      />
-                    </svg>
-                  </button>
+                      <svg
+                        class="h-5 w-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        />
+                      </svg>
+                    </button>
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -338,7 +463,6 @@
               pegawai
             </div>
 
-            <!-- Pagination Buttons -->
             <div class="flex items-center gap-2">
               <button
                 @click="prevPage"
@@ -360,27 +484,22 @@
                 </svg>
               </button>
 
-              <!-- Page Numbers -->
               <div class="flex items-center gap-1">
                 <button
-                  v-for="link in paginationLinks"
-                  :key="link.label"
+                  v-for="(link, idx) in paginationLinks"
+                  :key="idx"
                   @click="goToPage(link.page)"
-                  :disabled="!link.page"
+                  :disabled="!link.page || link.active"
                   :class="[
                     'px-4 py-2 border rounded-lg text-sm font-medium transition',
                     link.active
                       ? 'bg-blue-600 text-white border-blue-600'
                       : 'border-gray-300 text-gray-700 bg-white hover:bg-gray-50',
-                    !link.page && 'opacity-50 cursor-not-allowed',
+                    (!link.page || link.active) &&
+                      'opacity-50 cursor-not-allowed',
                   ]"
                 >
-                  {{
-                    link.label
-                      .replace("&laquo;", "")
-                      .replace("&raquo;", "")
-                      .trim()
-                  }}
+                  {{ link.label }}
                 </button>
               </div>
 
@@ -408,12 +527,87 @@
         </div>
       </div>
     </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div
+      v-if="showDeleteModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      @click.self="showDeleteModal = false"
+    >
+      <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold text-gray-900">Konfirmasi Hapus</h3>
+          <button
+            @click="showDeleteModal = false"
+            class="text-gray-400 hover:text-gray-600 transition"
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <p class="text-gray-600 mb-6">
+          Apakah Anda yakin ingin menghapus pegawai
+          <span class="font-semibold">{{ employeeToDelete?.full_name }}</span
+          >? Tindakan ini tidak dapat dibatalkan.
+        </p>
+
+        <div class="flex gap-3 justify-end">
+          <button
+            @click="showDeleteModal = false"
+            class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition"
+            :disabled="deleting"
+          >
+            Batal
+          </button>
+          <button
+            @click="deleteEmployee"
+            class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition flex items-center gap-2"
+            :disabled="deleting"
+          >
+            <svg
+              v-if="deleting"
+              class="animate-spin h-4 w-4"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+            {{ deleting ? "Menghapus..." : "Hapus" }}
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, computed } from "vue";
+import { ref, watch, onMounted } from "vue";
 import { useApi } from "~/composables/useApi";
+import { navigateTo } from "#imports";
 
 const api = useApi();
 
@@ -421,6 +615,9 @@ const employees = ref<any[]>([]);
 const search = ref("");
 const loading = ref(false);
 const errorMessage = ref("");
+const showDeleteModal = ref(false);
+const employeeToDelete = ref<any>(null);
+const deleting = ref(false);
 
 const pagination = ref({
   current_page: 1,
@@ -435,7 +632,6 @@ const pagination = ref({
 
 const paginationLinks = ref<any[]>([]);
 
-// 🎨 Helper untuk inisial nama
 const getInitials = (name: string) => {
   if (!name) return "??";
   return name
@@ -446,7 +642,16 @@ const getInitials = (name: string) => {
     .slice(0, 2);
 };
 
-// 🖼️ Helper untuk URL foto
+const formatDate = (date: string) => {
+  if (!date) return "-";
+  const d = new Date(date);
+  return d.toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+};
+
 const getPhotoUrl = (photoPath: string) => {
   if (!photoPath) return "";
 
@@ -469,7 +674,6 @@ const getPhotoUrl = (photoPath: string) => {
 
 const handleImageError = (event: Event) => {
   const img = event.target as HTMLImageElement;
-  // Sembunyikan img, tampilkan inisial
   img.style.display = "none";
 };
 
@@ -484,8 +688,6 @@ const loadEmployees = async () => {
         page: pagination.value.current_page,
       },
     });
-
-    console.log("Employee response:", response);
 
     const data = response.data;
 
@@ -502,7 +704,25 @@ const loadEmployees = async () => {
       next_page_url: data?.next_page_url || null,
     };
 
-    paginationLinks.value = data?.links || [];
+    // Parse pagination links
+    if (data?.links) {
+      paginationLinks.value = data.links
+        .filter((link: any) => {
+          const label = link.label
+            .replace("&laquo;", "")
+            .replace("&raquo;", "")
+            .trim();
+          return label !== "Previous" && label !== "Next";
+        })
+        .map((link: any) => ({
+          label: link.label
+            .replace("&laquo;", "")
+            .replace("&raquo;", "")
+            .trim(),
+          page: link.url ? new URL(link.url).searchParams.get("page") : null,
+          active: link.active,
+        }));
+    }
   } catch (error: any) {
     console.error("Gagal memuat pegawai:", error);
     errorMessage.value =
@@ -535,14 +755,46 @@ const nextPage = () => {
   }
 };
 
-const goToPage = (page: number | null) => {
-  if (page && page !== pagination.value.current_page) {
-    pagination.value.current_page = page;
+const goToPage = (page: string | null) => {
+  if (page && Number(page) !== pagination.value.current_page) {
+    pagination.value.current_page = Number(page);
     loadEmployees();
+  }
+};
+
+const viewEmployee = (id: string) => {
+  navigateTo(`/employees/${id}`);
+};
+
+const editEmployee = (id: string) => {
+  navigateTo(`/employees/${id}/edit`);
+};
+
+const confirmDelete = (employee: any) => {
+  employeeToDelete.value = employee;
+  showDeleteModal.value = true;
+};
+
+const deleteEmployee = async () => {
+  if (!employeeToDelete.value) return;
+
+  try {
+    deleting.value = true;
+
+    await api.delete(`/employees/${employeeToDelete.value.id}`);
+
+    showDeleteModal.value = false;
+    employeeToDelete.value = null;
+
+    // Reload employees
+    await loadEmployees();
+  } catch (error: any) {
+    console.error("Gagal menghapus pegawai:", error);
+    alert(error?.response?.data?.message || "Gagal menghapus pegawai");
+  } finally {
+    deleting.value = false;
   }
 };
 
 onMounted(loadEmployees);
 </script>
-
-<style scoped></style>

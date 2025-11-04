@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <table class="min-w-full border border-gray-300 bg-white">
     <thead class="bg-gray-200">
       <tr>
@@ -31,4 +31,4 @@
 <script setup lang="ts">
 const props = defineProps<{ employees: any[] }>();
 const apiBase = import.meta.env.NUXT_PUBLIC_API_BASE.replace("/api", "");
-</script>
+</script> -->

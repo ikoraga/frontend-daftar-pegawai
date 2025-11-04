@@ -281,7 +281,6 @@ const onLogin = async () => {
 
     await login(email.value, password.value);
 
-    // Redirect ke halaman employees setelah login berhasil
     await navigateTo("/employees");
   } catch (error: any) {
     console.error("Login error:", error);

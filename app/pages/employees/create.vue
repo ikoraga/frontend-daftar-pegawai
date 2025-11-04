@@ -47,7 +47,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">
-                  NIP <span class="text-red-500">*</span>
+                  NIP
                 </label>
                 <input
                   v-model="form.nip"
@@ -71,7 +71,7 @@
 
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">
-                  Tempat Lahir <span class="text-red-500">*</span>
+                  Tempat Lahir
                 </label>
                 <input
                   v-model="form.birth_place"
@@ -104,7 +104,17 @@
                   <option :value="false">Perempuan</option>
                 </select>
               </div>
-
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">
+                  Tempat Tugas <span class="text-red-500">*</span>
+                </label>
+                <input
+                  v-model="form.duty_place"
+                  type="text"
+                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                  placeholder="Masukkan tempat tugas"
+                />
+              </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">
                   Agama <span class="text-red-500">*</span>
@@ -126,7 +136,7 @@
 
               <div class="md:col-span-2">
                 <label class="block text-sm font-medium text-gray-700 mb-1">
-                  Alamat <span class="text-red-500">*</span>
+                  Alamat
                 </label>
                 <textarea
                   v-model="form.address"
@@ -138,7 +148,7 @@
 
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">
-                  No. Telepon <span class="text-red-500">*</span>
+                  No. Telepon
                 </label>
                 <input
                   v-model="form.phone"
@@ -172,13 +182,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">
-                  Pangkat / Golongan
+                  Pangkat / Golongan <span class="text-red-500">*</span>
                 </label>
                 <select
                   v-model="form.rank_id"
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 >
-                  <option value="">Pilih pangkat</option>
+                  <option value="" disabled>Pilih pangkat</option>
                   <option v-for="r in lookups.ranks" :key="r.id" :value="r.id">
                     {{ r.code }} - {{ r.name }}
                   </option>
@@ -193,7 +203,7 @@
                   v-model="form.echelon_id"
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 >
-                  <option value="">Pilih eselon</option>
+                  <option value="" disabled>Pilih eselon</option>
                   <option
                     v-for="e in lookups.echelons"
                     :key="e.id"
@@ -212,7 +222,7 @@
                   v-model="form.position_id"
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 >
-                  <option value="">Pilih jabatan</option>
+                  <option value="" disabled>Pilih jabatan</option>
                   <option
                     v-for="p in lookups.positions"
                     :key="p.id"
@@ -225,7 +235,7 @@
 
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">
-                  Unit Kerja <span class="text-red-500">*</span>
+                  Unit Kerja
                 </label>
                 <select
                   v-model="form.unit_id"
@@ -335,7 +345,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { useApi } from "#imports";
+import { navigateTo, useApi } from "#imports";
 
 /* 🧩 TYPING SECTION */
 interface BaseOption {
@@ -365,6 +375,7 @@ interface EmployeeForm {
   phone: string;
   npwp: string;
   gender: boolean;
+  duty_place: string;
   religion_id: string;
   rank_id: string;
   echelon_id: string;
@@ -389,6 +400,7 @@ const form = ref<EmployeeForm>({
   phone: "",
   npwp: "",
   gender: true,
+  duty_place: "",
   religion_id: "",
   rank_id: "",
   echelon_id: "",
@@ -432,8 +444,6 @@ const fetchLookups = async () => {
       api.get("http://localhost:8000/api/units"),
     ]);
 
-    console.log("daftar unit", unitData);
-    console.log("daftar lookup", lookupData);
     if (lookupData.status) {
       lookups.value = lookupData.data;
     }
@@ -457,6 +467,7 @@ const resetForm = () => {
     phone: "",
     npwp: "",
     gender: true,
+    duty_place: "",
     religion_id: "",
     rank_id: "",
     echelon_id: "",
@@ -506,6 +517,7 @@ const handleSubmit = async () => {
     setTimeout(() => {
       resetForm();
     }, 2000);
+    await navigateTo("/employees");
   } catch (error: any) {
     console.error(error);
     errorMessage.value =
