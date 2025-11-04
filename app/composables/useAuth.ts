@@ -17,8 +17,13 @@ export const useAuth = () => {
 
   const logout = async () => {
     const api = useApi();
-    await api.post("/logout");
-    token.value = null;
+    try {
+      await api.post("/logout");
+    } catch (error) {
+      console.warn("Logout failed (token mungkin sudah expired):", error);
+    } finally {
+      token.value = null; // pastikan cookie dihapus
+    }
   };
 
   return { login, logout, token };
