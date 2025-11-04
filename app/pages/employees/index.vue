@@ -1,58 +1,107 @@
 <template>
   <div class="p-6">
-    <header class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold">Daftar Pegawai</h1>
-      <button class="btn" @click="onLogout">Logout</button>
-    </header>
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Daftar Pegawai</h2>
 
-    <div class="flex justify-between mb-4">
+    <!-- Search Input -->
+    <div class="flex items-center mb-4">
       <input
         v-model="search"
-        placeholder="Cari nama / NIP"
-        class="input w-1/2"
+        type="text"
+        placeholder="Cari pegawai..."
+        class="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       />
-      <button class="btn" @click="loadEmployees">Cari</button>
     </div>
 
-    <EmployeeTable :employees="employees" />
+    <!-- Table -->
+    <EmployeeTable v-if="!loading && employees.length" :employees="employees" />
 
-    <div class="mt-6 flex justify-between items-center">
-      <button class="btn" @click="prevPage" :disabled="page === 1">Prev</button>
-      <span>Halaman {{ page }}</span>
-      <button class="btn" @click="nextPage" :disabled="!hasMore">Next</button>
+    <!-- Loading State -->
+    <div v-if="loading" class="text-center py-8 text-gray-500">
+      ⏳ Memuat data pegawai...
+    </div>
+
+    <!-- Empty State -->
+    <div
+      v-if="!loading && employees.length === 0"
+      class="text-center py-8 text-gray-400"
+    >
+      Tidak ada pegawai ditemukan.
+    </div>
+
+    <!-- Pagination -->
+    <div
+      class="flex justify-between items-center mt-6"
+      v-if="!loading && employees.length"
+    >
+      <button
+        @click="prevPage"
+        :disabled="page <= 1"
+        class="btn px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 disabled:opacity-50"
+      >
+        Prev
+      </button>
+
+      <span class="text-gray-700 font-medium"> Halaman {{ page }} </span>
+
+      <button
+        @click="nextPage"
+        :disabled="!hasMore"
+        class="btn px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+      >
+        Next
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router";
-import { useAuth } from "~/composables/useAuth";
+import { ref, watch, onMounted } from "vue";
 import { useApi } from "~/composables/useApi";
 import EmployeeTable from "~/components/EmployeeTable.vue";
+import { navigateTo } from "#app";
 
-const router = useRouter();
-const { logout } = useAuth();
+navigateTo("/login");
 const api = useApi();
 
-const employees = ref([]);
+const employees = ref<any[]>([]);
 const search = ref("");
 const page = ref(1);
-const hasMore = ref(true);
+const hasMore = ref(false);
+const loading = ref(false);
+const errorMessage = ref("");
 
+// 🚀 Fungsi utama untuk load data pegawai
 const loadEmployees = async () => {
-  const { data } = await api.get("/employees", {
-    params: { search: search.value, page: page.value },
-  });
-  employees.value = data.data;
-  hasMore.value = data.meta.current_page < data.meta.last_page;
+  try {
+    loading.value = true;
+    errorMessage.value = "";
+
+    const { data } = await api.get("/employees", {
+      params: { search: search.value, page: page.value },
+    });
+
+    employees.value = data?.data ?? [];
+    const meta = data?.meta ?? {};
+
+    hasMore.value = meta.current_page < meta.last_page;
+  } catch (error: any) {
+    console.error("Gagal memuat pegawai:", error);
+    errorMessage.value = "Gagal memuat data pegawai.";
+  } finally {
+    loading.value = false;
+  }
 };
 
-onMounted(loadEmployees);
+let searchTimeout: NodeJS.Timeout;
 watch(search, () => {
-  page.value = 1;
-  loadEmployees();
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    page.value = 1;
+    loadEmployees();
+  }, 500);
 });
 
+// Pagination
 const prevPage = () => {
   if (page.value > 1) {
     page.value--;
@@ -60,11 +109,18 @@ const prevPage = () => {
   }
 };
 const nextPage = () => {
-  page.value++;
-  loadEmployees();
+  if (hasMore.value) {
+    page.value++;
+    loadEmployees();
+  }
 };
-const onLogout = async () => {
-  await logout();
-  router.push("/login");
-};
+
+// Load awal
+onMounted(loadEmployees);
 </script>
+
+<style scoped>
+.btn {
+  transition: all 0.2s ease-in-out;
+}
+</style>

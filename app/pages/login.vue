@@ -54,31 +54,14 @@
             </div>
           </div>
 
+          <!-- Email Input -->
           <div>
             <label
               for="email"
               class="block text-sm font-medium text-gray-700 mb-2"
+              >Email</label
             >
-              Email
-            </label>
             <div class="relative">
-              <div
-                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
-              >
-                <svg
-                  class="h-5 w-5 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                  />
-                </svg>
-              </div>
               <input
                 id="email"
                 v-model="email"
@@ -86,7 +69,7 @@
                 autocomplete="email"
                 required
                 placeholder="nama@perusahaan.com"
-                class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150 ease-in-out text-gray-900 placeholder-gray-400"
+                class="block w-full pl-3 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-900 placeholder-gray-400"
                 :class="{ 'border-red-300': errorMessage }"
               />
             </div>
@@ -97,27 +80,9 @@
             <label
               for="password"
               class="block text-sm font-medium text-gray-700 mb-2"
+              >Password</label
             >
-              Password
-            </label>
             <div class="relative">
-              <div
-                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
-              >
-                <svg
-                  class="h-5 w-5 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                  />
-                </svg>
-              </div>
               <input
                 id="password"
                 v-model="password"
@@ -125,7 +90,7 @@
                 autocomplete="current-password"
                 required
                 placeholder="••••••••"
-                class="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-150 ease-in-out text-gray-900 placeholder-gray-400"
+                class="block w-full pl-3 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-gray-900 placeholder-gray-400"
                 :class="{ 'border-red-300': errorMessage }"
               />
               <button
@@ -164,14 +129,14 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
+                    d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"
                   />
                 </svg>
               </button>
             </div>
           </div>
 
-          <!-- Remember Me & Forgot Password -->
+          <!-- Remember me -->
           <div class="flex items-center justify-between">
             <div class="flex items-center">
               <input
@@ -180,25 +145,24 @@
                 type="checkbox"
                 class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
-              <label for="remember-me" class="ml-2 block text-sm text-gray-700">
-                Ingat saya
-              </label>
+              <label for="remember-me" class="ml-2 block text-sm text-gray-700"
+                >Ingat saya</label
+              >
             </div>
             <div class="text-sm">
               <a
                 href="#"
-                class="font-medium text-blue-600 hover:text-blue-500 transition duration-150"
+                class="font-medium text-blue-600 hover:text-blue-500 transition"
+                >Lupa password?</a
               >
-                Lupa password?
-              </a>
             </div>
           </div>
 
-          <!-- Submit Button -->
+          <!-- Button -->
           <button
             type="submit"
             :disabled="loading"
-            class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out disabled:opacity-50 disabled:cursor-not-allowed"
+            class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <svg
               v-if="loading"
@@ -226,21 +190,16 @@
 
         <!-- Divider -->
         <div class="mt-6">
-          <div class="relative">
-            <div class="absolute inset-0 flex items-center">
-              <div class="w-full border-t border-gray-300"></div>
-            </div>
-            <div class="relative flex justify-center text-sm">
-              <span class="px-2 bg-white text-gray-500">Belum punya akun?</span>
-            </div>
+          <div class="relative flex justify-center items-center">
+            <div class="w-full border-t border-gray-300"></div>
+            <span class="px-2 bg-white text-sm text-gray-500"
+              >Belum punya akun?</span
+            >
           </div>
           <div class="mt-4 text-center">
-            <a
-              href="#"
-              class="font-medium text-blue-600 hover:text-blue-500 transition duration-150"
+            <a href="#" class="font-medium text-blue-600 hover:text-blue-500"
+              >Daftar sekarang</a
             >
-              Daftar sekarang
-            </a>
           </div>
         </div>
       </div>
@@ -255,12 +214,16 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter } from "#imports";
 import { useAuth } from "~/composables/useAuth";
-import { navigateTo } from "#imports";
+import { definePageMeta, useNuxtApp } from "#imports";
+import { useCookie } from "#app";
+
+definePageMeta({ layout: false });
+
 const router = useRouter();
 const { login } = useAuth();
-
+const { $toast } = useNuxtApp() as any;
 const email = ref("");
 const password = ref("");
 const loading = ref(false);
@@ -272,35 +235,73 @@ const onLogin = async () => {
   errorMessage.value = "";
 
   if (!email.value || !password.value) {
-    errorMessage.value = "Email dan password wajib diisi";
+    errorMessage.value = "Email dan password tidak boleh kosong";
+    if ($toast?.warning) {
+      $toast.warning(errorMessage.value, {
+        position: "top-right",
+        autoClose: 2500,
+      });
+    }
     return;
   }
 
   try {
     loading.value = true;
+    const response = await login(email.value, password.value);
+    console.log("Login response:", response);
 
-    await login(email.value, password.value);
+    const token = response?.data?.token;
+    const user = response?.data?.user;
+    const message = response?.message;
 
-    // Redirect ke halaman employees setelah login berhasil
-    await navigateTo("/employees");
-  } catch (error: any) {
-    console.error("Login error:", error);
+    console.log("token", token);
+    console.log("user", user);
 
-    // Handle berbagai format error response
-    if (error.response?.data) {
-      const data = error.response.data;
+    if (response?.status === true && token) {
+      const tokenCookie = useCookie("auth_token");
+      tokenCookie.value = token;
 
-      // Prioritas pengambilan pesan error
-      errorMessage.value =
-        data.message ||
-        data.error ||
-        data.errors?.email?.[0] ||
-        data.errors?.password?.[0] ||
-        "Login gagal. Periksa kembali email dan password Anda.";
-    } else if (error.message) {
-      errorMessage.value = error.message;
+      const userCookie = useCookie("user_data");
+      userCookie.value = JSON.stringify(user || {});
+
+      if ($toast?.success) {
+        $toast.success(message || "Login berhasil", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+      }
+
+      setTimeout(() => router.push("/employees"), 500);
     } else {
-      errorMessage.value = "Terjadi kesalahan. Silakan coba lagi.";
+      const msg =
+        response?.message || "Login gagal. Periksa email dan password kamu.";
+
+      errorMessage.value = msg;
+
+      if ($toast?.error) {
+        $toast.error(msg, {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      }
+    }
+  } catch (error: any) {
+    console.log("Login error:", error);
+
+    const data = error?.response?.data;
+    const msg =
+      data?.message ||
+      data?.errors?.email?.[0] ||
+      data?.errors?.password?.[0] ||
+      "Terjadi kesalahan. Silakan coba lagi.";
+
+    errorMessage.value = msg;
+
+    if ($toast?.error) {
+      $toast.error(msg, {
+        position: "top-right",
+        autoClose: 4000,
+      });
     }
   } finally {
     loading.value = false;
