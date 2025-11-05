@@ -223,24 +223,11 @@
             {{ loading ? "Memproses..." : "Masuk" }}
           </button>
         </form>
-
-        <!-- Divider -->
         <div class="mt-6">
           <div class="relative">
             <div class="absolute inset-0 flex items-center">
               <div class="w-full border-t border-gray-300"></div>
             </div>
-            <div class="relative flex justify-center text-sm">
-              <span class="px-2 bg-white text-gray-500">Belum punya akun?</span>
-            </div>
-          </div>
-          <div class="mt-4 text-center">
-            <a
-              href="#"
-              class="font-medium text-blue-600 hover:text-blue-500 transition duration-150"
-            >
-              Daftar sekarang
-            </a>
           </div>
         </div>
       </div>
@@ -285,11 +272,9 @@ const onLogin = async () => {
   } catch (error: any) {
     console.error("Login error:", error);
 
-    // Handle berbagai format error response
     if (error.response?.data) {
       const data = error.response.data;
 
-      // Prioritas pengambilan pesan error
       errorMessage.value =
         data.message ||
         data.error ||
