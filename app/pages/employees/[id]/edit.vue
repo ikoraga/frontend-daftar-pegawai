@@ -647,7 +647,12 @@ const handleSubmit = async () => {
     formData.append("_method", "PATCH");
 
     for (const key in form.value) {
-      const val = form.value[key as keyof EmployeeForm];
+      let val = form.value[key as keyof EmployeeForm];
+
+      if (key === "gender") {
+        val = form.value.gender ? "1" : "0";
+      }
+
       if (val !== null && val !== undefined && val !== "") {
         if (val instanceof File) {
           formData.append(key, val);
