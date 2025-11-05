@@ -91,18 +91,32 @@
                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 />
               </div>
-
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                  Jenis Kelamin <span class="text-red-500">*</span>
-                </label>
-                <select
-                  v-model="form.gender"
-                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                >
-                  <option :value="true">Laki-laki</option>
-                  <option :value="false">Perempuan</option>
-                </select>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">
+                    Jenis Kelamin <span class="text-red-500">*</span>
+                  </label>
+                  <div class="flex items-center gap-6">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        v-model="form.gender"
+                        :value="true"
+                        class="text-blue-600 focus:ring-blue-500"
+                      />
+                      <span>Laki-laki</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        v-model="form.gender"
+                        :value="false"
+                        class="text-blue-600 focus:ring-blue-500"
+                      />
+                      <span>Perempuan</span>
+                    </label>
+                  </div>
+                </div>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">
@@ -443,11 +457,12 @@ const fetchLookups = async () => {
       api.get("http://localhost:8000/api/lookups"),
       api.get("http://localhost:8000/api/units"),
     ]);
+    console.log(unitData);
 
     if (lookupData.status) {
       lookups.value = lookupData.data;
     }
-    units.value = unitData || [];
+    units.value = unitData.data || [];
   } catch (error: any) {
     console.error("Gagal mengambil data lookup/unit:", error);
     const message =
@@ -494,9 +509,13 @@ const handleSubmit = async () => {
 
     const formData = new FormData();
 
-    // Append semua field ke FormData
     for (const key in form.value) {
-      const val = form.value[key as keyof EmployeeForm];
+      let val = form.value[key as keyof EmployeeForm];
+
+      if (key === "gender") {
+        val = form.value.gender ? "1" : "0";
+      }
+
       if (val !== null && val !== undefined && val !== "") {
         if (key === "photo" && val instanceof File) {
           formData.append(key, val);

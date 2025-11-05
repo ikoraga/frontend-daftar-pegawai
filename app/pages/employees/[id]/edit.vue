@@ -224,34 +224,36 @@
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
               />
             </div>
-
             <!-- Gender -->
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">
-                Jenis Kelamin <span class="text-red-500">*</span>
-              </label>
-              <div class="flex gap-4">
-                <label class="flex items-center">
-                  <input
-                    v-model="form.gender"
-                    type="radio"
-                    :value="true"
-                    class="w-4 h-4 text-yellow-600 border-gray-300 focus:ring-yellow-500"
-                  />
-                  <span class="ml-2 text-sm text-gray-700">Laki-laki</span>
-                </label>
-                <label class="flex items-center">
-                  <input
-                    v-model="form.gender"
-                    type="radio"
-                    :value="false"
-                    class="w-4 h-4 text-yellow-600 border-gray-300 focus:ring-yellow-500"
-                  />
-                  <span class="ml-2 text-sm text-gray-700">Perempuan</span>
-                </label>
+              <div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-1">
+                    Jenis Kelamin <span class="text-red-500">*</span>
+                  </label>
+                  <div class="flex items-center gap-6">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        v-model="form.gender"
+                        :value="true"
+                        class="text-blue-600 focus:ring-blue-500"
+                      />
+                      <span>Laki-laki</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        v-model="form.gender"
+                        :value="false"
+                        class="text-blue-600 focus:ring-blue-500"
+                      />
+                      <span>Perempuan</span>
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
-
             <!-- Religion -->
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -580,7 +582,7 @@ const getPhotoUrl = (photoPath: string) => {
   if (photoPath.startsWith("http://") || photoPath.startsWith("https://")) {
     return photoPath;
   }
-  const baseUrl = "http://localhost:8000";
+  const baseUrl = import.meta.env.NUXT_PUBLIC_API_BASE?.replace("/api", "");
   if (photoPath.startsWith("storage/")) {
     return `${baseUrl}/${photoPath}`;
   }
@@ -600,7 +602,7 @@ const fetchLookups = async () => {
     if (lookupData?.data) {
       lookups.value = lookupData.data;
     }
-    units.value = unitData;
+    units.value = unitData.data;
   } catch (error: any) {
     console.error("Error fetching lookups:", error);
     errorMessage.value = "Gagal memuat data referensi.";
@@ -611,7 +613,6 @@ const handleFile = (e: Event) => {
   const target = e.target as HTMLInputElement;
   const file = target.files?.[0];
   if (file) {
-    // Validate file size (2MB)
     if (file.size > 2 * 1024 * 1024) {
       errorMessage.value = "Ukuran file terlalu besar. Maksimal 2MB.";
       return;

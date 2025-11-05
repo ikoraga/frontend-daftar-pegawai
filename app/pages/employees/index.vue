@@ -250,7 +250,7 @@
                   Unit Kerja
                 </th>
                 <th
-                  class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  class="px-6 py-3 text-right text-xs font-medium text-gray-800 uppercase tracking-wider"
                 >
                   Aksi
                 </th>
@@ -634,7 +634,6 @@ const pagination = ref({
 
 const paginationLinks = ref<any[]>([]);
 
-// Computed - Flatten nested units structure
 const flatUnits = computed(() => {
   const flatten = (unitsList: any[], prefix = ""): any[] => {
     return unitsList.flatMap((unit) => [
@@ -827,7 +826,6 @@ watch(selectedUnit, () => {
   loadEmployees();
 });
 
-// Lifecycle
 onMounted(() => {
   fetchUnits();
   loadEmployees();
