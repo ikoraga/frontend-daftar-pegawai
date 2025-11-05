@@ -2,7 +2,6 @@
   <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
     <div class="px-6 py-4 flex justify-between items-center">
       <div class="flex items-center gap-4">
-        <!-- Logo/Icon -->
         <div
           class="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg"
         >
@@ -32,7 +31,6 @@
           <span class="text-xs font-semibold text-blue-700">v1.0.0</span>
         </div>
 
-        <!-- User Info (Optional) -->
         <div
           class="hidden md:flex items-center gap-3 pl-4 border-l border-gray-200"
         >

@@ -28,9 +28,7 @@
         <p class="text-gray-600 mt-2">Lengkapi informasi unit kerja baru</p>
       </div>
 
-      <!-- Form Card -->
       <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-        <!-- Header Form -->
         <div
           class="bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-6 text-white"
         >
@@ -83,7 +81,6 @@
           </div>
         </div>
 
-        <!-- Alert Error -->
         <div
           v-if="errorMessage"
           class="mx-8 mt-6 bg-red-50 border-l-4 border-red-500 p-4 rounded-lg"

@@ -6,12 +6,6 @@
         <h1 class="text-3xl font-bold text-gray-900">Daftar Unit Kerja</h1>
         <div class="flex items-center gap-3">
           <button
-            @click="loadUnits"
-            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-          >
-            🔄 Muat Ulang
-          </button>
-          <button
             @click="navigateTo('/units/create')"
             class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
           >
