@@ -361,7 +361,6 @@
 import { ref, onMounted } from "vue";
 import { navigateTo, useApi } from "#imports";
 
-/* 🧩 TYPING SECTION */
 interface BaseOption {
   id: string;
   name: string;
@@ -398,7 +397,6 @@ interface EmployeeForm {
   photo: File | null;
 }
 
-/* ⚙️ MAIN LOGIC */
 const api = useApi();
 const loading = ref(false);
 const errorMessage = ref("");
@@ -439,7 +437,6 @@ const handleFile = (e: Event) => {
   if (file) {
     form.value.photo = file;
 
-    // Preview foto
     const reader = new FileReader();
     reader.onload = (e) => {
       photoPreview.value = e.target?.result as string;
@@ -454,8 +451,8 @@ const handleFile = (e: Event) => {
 const fetchLookups = async () => {
   try {
     const [{ data: lookupData }, { data: unitData }] = await Promise.all([
-      api.get("http://localhost:8000/api/lookups"),
-      api.get("http://localhost:8000/api/units"),
+      api.get("/lookups"),
+      api.get("/units"),
     ]);
     console.log(unitData);
 
@@ -494,7 +491,6 @@ const resetForm = () => {
   errorMessage.value = "";
   successMessage.value = "";
 
-  // Reset file input
   const fileInput = document.querySelector(
     'input[type="file"]'
   ) as HTMLInputElement;
@@ -525,14 +521,10 @@ const handleSubmit = async () => {
       }
     }
 
-    const { data } = await api.post(
-      "http://localhost:8000/api/employees",
-      formData
-    );
+    const { data } = await api.post("/employees", formData);
 
     successMessage.value = data.message || "Pegawai berhasil ditambahkan!";
 
-    // Reset form setelah berhasil
     setTimeout(() => {
       resetForm();
     }, 2000);

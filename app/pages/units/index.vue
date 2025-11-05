@@ -9,7 +9,7 @@
             @click="navigateTo('/units/create')"
             class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
           >
-            ➕ Tambah Unit
+            Tambah Unit
           </button>
         </div>
       </div>
